@@ -1,3 +1,3 @@
 inoremap jk; <Esc>:
-inoremap n  o<Esc>:
-inorempa N  O<Esc>:
+nnoremap n  o<Esc>:
+nnoremap N  O<Esc>:

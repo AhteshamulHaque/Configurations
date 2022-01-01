@@ -125,7 +125,7 @@ vim.opt.fillchars = "fold: ,foldclose:,foldopen:,foldsep: ,diff: ,eob: "
 vim.opt.switchbuf = "useopen"
 
 -- Space as leader key
-vim.g.mapleader = "/"
+vim.g.mapleader = "\\"
 
 -- Save state when using :mkview
 vim.opt.viewoptions = "cursor,folds,slash,unix"
@@ -183,7 +183,7 @@ inoremap jk <Esc>
 nnoremap ; :
 nnoremap <leader>N O<Esc>
 nnoremap <leader>n o<Esc>
-vnoremap <df> <Esc>
+vnoremap df <Esc>
 
 " Shortcut to use blackhole register by default
 nnoremap d "_d

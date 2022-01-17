@@ -169,7 +169,7 @@ function M.post()
         provider = function()
           local vim_mode = vim.fn.mode()
           vim.cmd("hi GalaxyViMode gui=bold guifg=#222222 guibg=" .. mode_color[vim_mode])
-          return " " .. mode_alias[vim_mode]
+          return "  " .. mode_alias[vim_mode]
         end,
         highlight = "GalaxyViMode",
         separator = " ",

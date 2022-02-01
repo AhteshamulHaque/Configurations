@@ -21,6 +21,8 @@ vim.opt.relativenumber = true
 vim.opt.cursorline = false
 vim.opt.updatetime = 4000
 vim.opt.timeoutlen = 1000
+vim.opt.nrformats = "alpha,octal,hex"
+
 vim.cmd([[
   " Cursor settings
   set guicursor=n:ver50-blinkon50,i:block-blink50,v:hor30-blinkon50
@@ -225,13 +227,31 @@ lvim.plugins = {
   {
     "NTBBloodbath/galaxyline.nvim",
     config = function()
-              require('status_line').post()
-            end,
+      require('status_line').post()
+    end,
     requires = {
       { 'kyazdani42/nvim-web-devicons', opt = true },
       { "nvim-lua/lsp-status.nvim" }
     }
-  }
+  },
+
+  {
+    "triglav/vim-visual-increment"
+  },
+
+  {
+    "chipsenkbeil/distant.nvim",
+    config = function()
+      require('distant').setup {
+        -- Applies Chip's personal settings to every machine you connect to
+        --
+        -- 1. Ensures that distant servers terminate with no connections
+        -- 2. Provides navigation bindings for remote directories
+        -- 3. Provides keybinding to jump into a remote file's parent directory
+        ['*'] = require('distant.settings').chip_default()
+      }
+    end
+}
 
 --     {"folke/tokyonight.nvim"},
 --     {

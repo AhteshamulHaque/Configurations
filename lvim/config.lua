@@ -104,6 +104,9 @@ vim.cmd([[
 lvim.keys.normal_mode["<leader>w"] = ":w<cr>"
 lvim.keys.normal_mode[";"] = ":"
 
+-- Vertical line to keep track of line width
+lvim.keys.normal_mode["<leader>h"] = ":set colorcolumn=80<cr>:highlight ColorColumn ctermbg=0 guibg=lightgrey<cr>"
+
 -- unmap a default keymapping
 -- lvim.keys.normal_mode["<C-Up>"] = false
 -- edit a default keymapping

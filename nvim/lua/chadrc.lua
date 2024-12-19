@@ -14,18 +14,18 @@ M.base46 = {
 	-- },
 }
 
-M.ui = {
-  statusline = {
-    theme = "minimal",
-    separator_style = "round",
-    order = { "mode", "file", "git", "%=", "lsp_msg", "%=","msg", "diagnostics", "lsp", "cwd", "cursor" },
-      modules = {
-        msg = function()
-          return ""
-        end,
-
-        f = "%F"
-      }
-  },
-}
+-- M.ui = {
+--   statusline = {
+--     theme = "default",
+--     -- separator_style = "round",
+--     -- order = { "mode", "file", "git", "%=", "lsp_msg", "%=","msg", "diagnostics", "lsp", "cwd", "cursor" },
+--       modules = {
+--         msg = function()
+--           return ""
+--         end,
+--
+--         f = "%F"
+--       }
+--   },
+-- }
 return M

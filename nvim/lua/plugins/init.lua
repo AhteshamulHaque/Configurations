@@ -53,6 +53,16 @@ return {
     opts = require "configs.neoscroll",
     lazy = false,
   },
+
+  {
+      '2kabhishek/nerdy.nvim',
+      dependencies = {
+          'stevearc/dressing.nvim',
+          'nvim-telescope/telescope.nvim',
+      },
+      cmd = 'Nerdy',
+      lazy = false,
+  },
   -- {
   -- 	"nvim-treesitter/nvim-treesitter",
   -- 	opts = {

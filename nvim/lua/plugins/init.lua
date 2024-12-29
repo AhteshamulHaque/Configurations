@@ -60,7 +60,10 @@ return {
           'stevearc/dressing.nvim',
           'nvim-telescope/telescope.nvim',
       },
-      cmd = 'Nerdy',
+      keys = {
+          { "<leader>fi", "<cmd>Nerdy<cr>", desc = "NerdyFonts" }
+      },
+      -- cmd = 'Nerdy',
       lazy = false,
   },
   -- {

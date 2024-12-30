@@ -63,7 +63,6 @@ return {
       keys = {
           { "<leader>fi", "<cmd>Nerdy<cr>", desc = "NerdyFonts" }
       },
-      -- cmd = 'Nerdy',
       lazy = false,
   },
   -- {

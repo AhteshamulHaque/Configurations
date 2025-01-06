@@ -55,15 +55,23 @@ return {
   },
 
   {
-      '2kabhishek/nerdy.nvim',
-      dependencies = {
-          'stevearc/dressing.nvim',
-          'nvim-telescope/telescope.nvim',
-      },
-      keys = {
-          { "<leader>fi", "<cmd>Nerdy<cr>", desc = "NerdyFonts" }
-      },
-      lazy = false,
+    '2kabhishek/nerdy.nvim',
+    dependencies = {
+        'stevearc/dressing.nvim',
+        'nvim-telescope/telescope.nvim',
+    },
+    keys = {
+        { "<leader>fi", "<cmd>Nerdy<cr>", desc = "NerdyFonts" }
+    },
+    lazy = false,
+  },
+
+  {
+    "nvim-tree/nvim-tree.lua",
+    cmd = { "NvimTreeToggle", "NvimTreeFocus" },
+    config = function()
+      require("configs.nvimtree")
+    end,
   },
   -- {
   -- 	"nvim-treesitter/nvim-treesitter",

@@ -14,6 +14,11 @@ M.base46 = {
 	-- },
 }
 
+M.ui = {
+  telescope = {
+    style = "bordered"
+  },
+}
 -- M.ui = {
 --   statusline = {
 --     theme = "default",

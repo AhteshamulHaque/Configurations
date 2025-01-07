@@ -16,7 +16,8 @@ M.base46 = {
 
 M.ui = {
   telescope = {
-    style = "bordered"
+    style = "bordered",
+    border = "rounded",
   },
 }
 -- M.ui = {

@@ -14,8 +14,6 @@ nvim_tree.setup({
         height = math.floor(height * 0.7),  -- 70% of the screen height
         row = math.floor((height - math.floor(height * 0.7)) / 2),
         col = math.floor((width - math.floor(width * 0.7)) / 2),
-        title = " File Explorer ",
-        title_pos = "center",
       }
     },
   },

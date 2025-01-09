@@ -73,6 +73,15 @@ return {
       require("configs.nvimtree")
     end,
   },
+  {
+    "LunarVim/bigfile.nvim",
+    event = "BufReadPre",
+    opts = {
+      config = {
+        filesize = "2"   -- size in MiB of file
+      }
+    }
+  },
   -- {
   -- 	"nvim-treesitter/nvim-treesitter",
   -- 	opts = {

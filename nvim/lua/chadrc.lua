@@ -6,7 +6,7 @@
 local M = {}
 
 M.base46 = {
-	theme = "dark_horizon",
+	theme = "chadracula",
 
 	-- hl_override = {
 	-- 	Comment = { italic = true },
@@ -14,24 +14,4 @@ M.base46 = {
 	-- },
 }
 
-M.ui = {
-  telescope = {
-    style = "bordered",
-    border = "rounded",
-  },
-}
--- M.ui = {
---   statusline = {
---     theme = "default",
---     -- separator_style = "round",
---     -- order = { "mode", "file", "git", "%=", "lsp_msg", "%=","msg", "diagnostics", "lsp", "cwd", "cursor" },
---       modules = {
---         msg = function()
---           return ""
---         end,
---
---         f = "%F"
---       }
---   },
--- }
 return M

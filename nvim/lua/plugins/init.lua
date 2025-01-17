@@ -67,14 +67,6 @@ return {
   },
 
   {
-    "nvim-tree/nvim-tree.lua",
-    cmd = { "NvimTreeToggle", "NvimTreeFocus" },
-    config = function()
-      require("configs.nvimtree")
-    end,
-  },
-
-  {
     "LunarVim/bigfile.nvim",
     event = "BufReadPre",
     opts = {
@@ -87,6 +79,37 @@ return {
   {
     "folke/todo-comments.nvim",
     dependencies = { "nvim-lua/plenary.nvim" },
+  },
+
+  {
+    "christoomey/vim-tmux-navigator",
+    cmd = {
+      "TmuxNavigateLeft",
+      "TmuxNavigateDown",
+      "TmuxNavigateUp",
+      "TmuxNavigateRight",
+      "TmuxNavigatePrevious",
+      "TmuxNavigatorProcessList",
+    },
+    lazy = false,
+  },
+
+  {
+    "smoka7/multicursors.nvim",
+    event = "VeryLazy",
+    dependencies = {
+        'nvimtools/hydra.nvim',
+    },
+    opts = {},
+    cmd = { 'MCstart', 'MCvisual', 'MCclear', 'MCpattern', 'MCvisualPattern', 'MCunderCursor' },
+    keys = {
+            {
+                mode = { 'v', 'n' },
+                '<Leader>mm',
+                '<cmd>MCstart<cr>',
+                desc = 'Create a selection for selected text or word under the cursor',
+            },
+        },
   },
   -- {
   -- 	"nvim-treesitter/nvim-treesitter",

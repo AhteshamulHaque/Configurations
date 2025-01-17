@@ -5,7 +5,7 @@ require "nvchad.mappings"
 local map = vim.keymap.set
 
 map("i", "jk", "<ESC>")
-map("n", ";", ":", { desc = "CMD enter command mode" })
+map("n", ";", ":", { desc = "Enter command mode" })
 
 -- save current session for the current directory
 map("n", "<leader>qs", function()
@@ -27,18 +27,41 @@ map("n", "<leader>qd", function()
   require("persistence").stop()
 end, { desc = "Stop Persistence"})
 
--- floating vertical terminal
-map({"n", "t"}, "<leader>v",  function()
-  require("nvchad.term").toggle { pos = "vsp", size = 0.3, id = "vtoggleTerm" }
-end, { desc = "terminal toggleable vertical term" })
-
--- floating horizontal terminal
-map({"n", "t"}, "<leader>h", function()
-  require("nvchad.term").toggle { pos = "sp", size = 0.3, id = "htoggleTerm" }
-end, { desc = "terminal toggleable horizontal term" })
-
 -- floating central terminal
 map({"n", "t"}, "<leader>tf", function()
   require("nvchad.term").toggle {
-    pos = "float", id = "floatTerm" }
-end, { desc = "terminal toggle floating term" })
+    pos = "float", id = "floatTerm",
+    float_opts = {
+      row = 0.1,
+      col = 0.13,
+      width = 0.7,
+      height = 0.7,
+    }
+  }
+end, { desc = "Toggleable floating terminal" })
+
+-- vim tmux navigator
+map("n", "<C-h>", "<cmd>TmuxNavigateLeft<cr>")
+map("n", "<C-j>", "<cmd>TmuxNavigateDown<cr>")
+map("n", "<C-k>", "<cmd>TmuxNavigateUp<cr>")
+map("n", "<C-l>", "<cmd>TmuxNavigateRight<cr>")
+map("n", "<C-\\>", "<cmd>TmuxNavigatePrevious<cr>")
+
+
+-- disable keybindings 
+local M = {}
+M.disabled = {
+  n = {
+    ["<M-i>"] = "",
+    ["<M-h>"] = "",
+    ["<M-v>"] = "",
+    ["<leader>v"] = "",
+    ["<leader>h"] = "",
+  }
+}
+
+for mode, mappings in pairs(M.disabled) do
+  for key, _ in pairs(mappings) do
+    vim.keymap.del(mode, key)
+  end
+end

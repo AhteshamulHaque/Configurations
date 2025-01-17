@@ -7,15 +7,17 @@ source "$current_dir"/utils.sh
 
 show_powerline=$(get_tmux_option "@tmux2k-show-powerline" true)
 window_list_alignment=$(get_tmux_option "@tmux2k-window-list-alignment" 'absolute-centre')
+window_name_format=$(get_tmux_option "@tmux2k-window-name-format" '#I:#W')
 refresh_rate=$(get_tmux_option "@tmux2k-refresh-rate" 60)
 start_icon=$(get_tmux_option "@tmux2k-start-icon" "session")
 l_sep=$(get_tmux_option "@tmux2k-left-sep" )
-l_sep=$(get_tmux_option "@tmux2k-left-sep" )
-left_status=$(get_tmux_option "@tmux2k-left-status" 'left')
-right_status=$(get_tmux_option "@tmux2k-right-status" 'right')
+r_sep=$(get_tmux_option "@tmux2k-right-sep" )
 wl_sep=$(get_tmux_option "@tmux2k-window-left-sep" )
 wr_sep=$(get_tmux_option "@tmux2k-window-right-sep" )
+left_status=$(get_tmux_option "@tmux2k-left-status" 'left')
+right_status=$(get_tmux_option "@tmux2k-right-status" 'right')
 show_flags=$(get_tmux_option "@tmux2k-show-flags" true)
+show_active_window=$(get_tmux_option "@tmux2k-show-active-window" false)
 IFS=' ' read -r -a lplugins <<<"$(get_tmux_option '@tmux2k-left-plugins' 'git cwd')"
 IFS=' ' read -r -a rplugins <<<"$(get_tmux_option '@tmux2k-right-plugins' 'cpu ram battery network time')"
 theme=$(get_tmux_option "@tmux2k-theme" 'default')
@@ -150,6 +152,25 @@ set_theme() {
         purple=$(get_tmux_option "@tmux2k-purple" '#c678fd')
         light_purple=$(get_tmux_option "@tmux2k-light-purple" '#f678cd')
         ;;
+    "matrix")
+        matrix_bg=$(get_tmux_option "@tmux2k-duo-bg" '#000000')
+        matrix_fg=$(get_tmux_option "@tmux2k-duo-fg" "#11f73f")
+        text=$(get_tmux_option "@tmux2k-white" "$matrix_bg")
+        bg_main=$(get_tmux_option "@tmux2k-bg-main" "$matrix_bg")
+        bg_alt=$(get_tmux_option "@tmux2k-bg-alt" "$matrix_bg")
+        black=$(get_tmux_option "@tmux2k-black" "$matrix_bg")
+        white=$(get_tmux_option "@tmux2k-white" "$matrix_fg")
+        red=$(get_tmux_option "@tmux2k-red" "$matrix_fg")
+        light_red=$(get_tmux_option "@tmux2k-light-red" "$matrix_fg")
+        green=$(get_tmux_option "@tmux2k-green" "$matrix_fg")
+        light_green=$(get_tmux_option "@tmux2k-light-green" "$matrix_fg")
+        blue=$(get_tmux_option "@tmux2k-blue" "$matrix_fg")
+        light_blue=$(get_tmux_option "@tmux2k-light-blue" "$matrix_fg")
+        yellow=$(get_tmux_option "@tmux2k-yellow" "$matrix_fg")
+        light_yellow=$(get_tmux_option "@tmux2k-light-yellow" "$matrix_fg")
+        purple=$(get_tmux_option "@tmux2k-purple" "$matrix_fg")
+        light_purple=$(get_tmux_option "@tmux2k-light-purple" "$matrix_fg")
+        ;;
     esac
 
     if $icons_only; then
@@ -199,15 +220,15 @@ start_icon() {
 
     first_plugin=${lplugins[0]}
     IFS=' ' read -r -a first_colors <<<"$(get_plugin_colors "$first_plugin")"
-    tmux set-option -g status-left "#[bg=${!first_colors[0]},fg=${!first_colors[1]}]#{?client_prefix,#[bg=${light_yellow},} ${start_icon} "
+    tmux set-option -g status-left "#[bg=${!first_colors[0]},fg=${!first_colors[1]}]#{?client_prefix,#[bg=${blue}],} ${start_icon} "
 }
 
 status_bar() {
     side=$1
     if [ "$side" == "left" ]; then
-        plugins=("${lplugins[@]}")
+      plugins=("${lplugins[@]}")
     elif [ "$side" == "right" ]; then
-        plugins=("${rplugins[@]}")
+      plugins=("${rplugins[@]}")
     else
       return
     fi
@@ -261,18 +282,25 @@ window_list() {
 
     if $show_powerline; then
         tmux set-window-option -g window-status-current-format \
-            "#[fg=${wfg},bg=${wbg}]${wl_sep}#[bg=${wfg}]#[fg=${wbg}]${spacer}#I:#W${spacer}#[fg=${wfg},bg=${wbg}]${wr_sep}"
+            "#[fg=${wfg},bg=${wbg}]${wl_sep}#[bg=${wfg}]${current_flags}#[fg=${wbg}]${spacer}${window_name_format}${spacer}#[fg=${wfg},bg=${wbg}]${wr_sep}"
         tmux set-window-option -g window-status-format \
-            "#[fg=${bg_alt},bg=${wbg}]${wl_sep}#[bg=${bg_alt}]#[fg=${white}]${spacer}#I:#W${spacer}#[fg=${bg_alt},bg=${wbg}]${wr_sep}"
+            "#[fg=${bg_alt},bg=${wbg}]${wl_sep}#[bg=${bg_alt}]${flags}#[fg=${white}]${spacer}${window_name_format}${spacer}#[fg=${bg_alt},bg=${wbg}]${wr_sep}"
     else
-        tmux set-window-option -g window-status-current-format "#[fg=${wbg},bg=${wfg}] #I:#W${spacer}"
-        tmux set-window-option -g window-status-format "#[fg=${white},bg=${bg_alt}] #I:#W${spacer}"
+        tmux set-window-option -g window-status-current-format "#[fg=${wbg},bg=${wfg}] ${window_name_format}${spacer}${current_flags} "
+        tmux set-window-option -g window-status-format "#[fg=${white},bg=${bg_alt}] ${window_name_format}${spacer}${flags} "
     fi
 
     if $icons_only; then
-        tmux set-window-option -g window-status-current-format "#[fg=${wbg},bg=${wfg}]${spacer}#I:#W${spacer}"
-        tmux set-window-option -g window-status-format "#[fg=${green},bg=${wbg}]${spacer}#I:#W${spacer}"
+        tmux set-window-option -g window-status-current-format "#[fg=${wbg},bg=${wfg}]${spacer}${window_name_format}${spacer}"
+        tmux set-window-option -g window-status-format "#[fg=${white},bg=${wfg}]${spacer}${window_name_format}${spacer}"
+
+      if $show_active_window; then
+          tmux set-window-option -g window-status-current-format \
+              "#[fg=${wbg},bg=${wfg}]${wl_sep}#[bg=${wbg}]#[fg=${wfg}]${spacer}${window_name_format}${spacer}#[fg=${wbg},bg=${wfg}]${wr_sep}"
+          tmux set-window-option -g window-status-format "#[fg=${white},bg=${wfg}]${spacer}${window_name_format}${spacer}"
+      fi
     fi
+
 }
 
 main() {
